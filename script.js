@@ -1,7 +1,17 @@
-var ul = document.getElementsByTagName('ul')[0];
+    // Select the second item and change its background color to green
+    const secondItem = document.querySelector('#items li:nth-child(2)');
+    secondItem.style.backgroundColor = 'green';
 
-var newLi = document.createElement("li");
+    // Select the third item and make it invisible
+    const thirdItem = document.querySelector('#items li:nth-child(3)');
+    thirdItem.style.display = 'none';
 
-newLi.textContent = "New Item 5";
+    // const secondItem2=document.querySelectorAll("li");
+    // secondItem2[1].style.color='green';
 
-ul.appendChild(newLi);
+    // const ul=document.querySelectorAll("li:nth-child(odd)");
+    // ul.forEach((li)=>{
+    //     li.style.backgroundColor='green';
+    // });
+
+
