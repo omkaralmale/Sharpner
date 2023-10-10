@@ -1,36 +1,43 @@
+var list=document.getElementById('items');
 var form=document.getElementById('addForm');
-var itemList=document.getElementById('items');
-//form submit event
-form.addEventListener('submit', addItem);
+let search=document.getElementById('filter');
+search.addEventListener('keyup',SearchItem);
+form.addEventListener('submit',addItem);
 
-//remove 
-itemList.addEventListener('click',removeItem)
-// add item
 function addItem(e){
     e.preventDefault();
-    // get input value
-    var val=document.getElementById('item');
-    
-    var li=document.createElement('li');
-    li.className="list-group-item";
-    li.appendChild(document.createTextNode(val.value));
-    //create delete button
+    var list=document.getElementById('items');
+    let item=document.getElementById('item');
+    let Description=document.getElementById('Description');
+
+    let newItem=document.createElement("li");
+    newItem.className='list-group-item';
+    newItem.appendChild(document.createTextNode(item.value));
+    newItem.appendChild(document.createTextNode(Description.value));
     var buttonDel=document.createElement('button');
     buttonDel.className='btn btn-danger btn-sm float-right delete';
     buttonDel.appendChild(document.createTextNode('X'));
-    li.appendChild(buttonDel)
-    var Edit=document.createElement('button');
-    Edit.className='btn btn-danger btn-sm float-right delete';
-    Edit.appendChild(document.createTextNode('Edit'));
-    li.appendChild(Edit)
-    itemList.appendChild(li)
+    newItem.appendChild(buttonDel)
+    var buttonEdit=document.createElement('button');
+    buttonEdit.className='btn btn-green btn-sm float-right delete';
+    buttonEdit.appendChild(document.createTextNode('Edit'));
+    newItem.appendChild(buttonEdit)
+
+    list.appendChild(newItem);
 }
 
-function removeItem(e){
-    if(e.target.classList.contains('delete')){
-        if(confirm("Sure")){
-            var li=e.target.parentElement;
-            itemList.removeChild(li)
-        }
+function SearchItem(e){
+    var lists=document.getElementsByTagName("li");
+    let valueEntered=e.target.value.toLowerCase();
+    // console.log(valueEntered);
+   Array.from(lists).forEach((items)=>{
+    var item=items.firstChild.textContent;
+    var description=items.nextSibling.textContent;
+    if((item.toLowerCase().indexOf(valueEntered)!=-1)||(description.toLowerCase().indexOf(valueEntered)!=-1)){
+        items.style.display='block';
     }
+    else{
+        items.style.display='none';
+    }
+   })
 }
