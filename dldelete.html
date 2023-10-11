@@ -139,7 +139,7 @@
         var li = e.target.parentElement;
         let email = li.dataset.email; // Retrieve the email from the data attribute
         ol.removeChild(li);
-        localStorage.removeItem(email);
+        localStorage.removeItem(email.value);
       }
     }
   </script>
