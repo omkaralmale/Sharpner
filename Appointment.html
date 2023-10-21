@@ -88,7 +88,7 @@
       referrerpolicy="no-referrer"></script>
   </body>
   <script>
-    const url = "https://crudcrud.com/api/a05b9e3ba0794e25a148dbdbaa1abf01";
+    const url = "https://crudcrud.com/api/4fdba851b2884d22b6f2ef813267633b";
     const form = document.getElementById("addForm");
     const itemList = document.getElementById("items");
 
@@ -134,15 +134,16 @@
       axios
         .get(`${url}/appointments`)
         .then((res) => {
-          console.log(res.data);
           itemList.innerHTML = ""; // Clear the existing list
           res.data.forEach((item) => {
             let li = document.createElement("li");
             li.className = "list-group-item";
+            li.value = item._id;
             li.appendChild(
-              document.createTextNode(item.userName + "  " + item.userTel)
+              document.createTextNode(
+                item._id + " " + item.userName + "  " + item.userTel
+              )
             );
-
             var btnDelete = document.createElement("button");
             btnDelete.className = "btn btn-danger btn-sm float-right delete";
             btnDelete.appendChild(document.createTextNode("Delete"));
@@ -166,18 +167,24 @@
       if (e.target.classList.contains("delete")) {
         // Handle delete button
         const li = e.target.parentElement;
-        const userName = li.textContent.split(" ")[0];
-        deleteAppointment(userName);
+        const userId = li.textContent.split(" ")[0];
+        itemList.removeChild(li);
+        console.log(userId);
+        deleteAppointment(userId);
       } else if (e.target.classList.contains("edit")) {
-        // Handle edit button
-        // You can add your edit functionality here
+        // if (e.target.classList.contains("edit")) {
+        // // Handle delete button
+        // const li = e.target.parentElement;
+        // const userId = li.textContent.split(" ")[0];
+        // itemList.removeChild(li);
+        // console.log(userId);
+        // deleteAppointment(userId);
       }
     }
 
-    // Function to delete an appointment using Axios
     function deleteAppointment(userName) {
       axios
-        .delete(`${url}/appointments?userName=${userName}`)
+        .delete(`${url}/appointments/${userName}`)
         .then(() => {
           console.log(`Deleted: ${userName}`);
           getAxios(); // Reload the appointment list after deleting
